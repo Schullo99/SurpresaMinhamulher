@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para Minha Esposa...</title>
+    <style>
+        /* Variáveis de Cores */
+        :root {
+            --neon-color: #690aa3; 
+            --bg-color: #0d0d1e; 
+            --heart-color-red: #E74C3C; 
+            --heart-color-black: #333333; 
+        }
+
+        /* Estilos Globais */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: #e0e0e0;
+            text-align: center;
+            display: flex; 
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh; 
+            overflow-x: hidden; 
+            position: relative; 
+        }
+
+        /* Container Principal do Conteúdo */
+        #content-container {
+            max-width: 800px;
+            width: 100%;
+            margin: 20px auto;
+            background-color: transparent; 
+            padding: 10px 30px 30px 30px; /* Padding ajustado para o topo */
+            display: none; 
+            opacity: 0; 
+            transition: opacity 1s ease-in-out;
+            text-align: left;
+            z-index: 10; 
+        }
+
+        /* Estilos para o Botão Inicial (Tela de Entrada) */
+        #entry-screen {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100vh;
+            background-color: var(--bg-color);
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 100; 
+        }
+
+        .neon-button {
+            padding: 15px 30px;
+            font-size: 1.5rem; 
+            font-weight: bold;
+            color: var(--neon-color);
+            background: transparent;
+            border: 4px solid var(--neon-color);
+            border-radius: 8px;
+            cursor: pointer;
+            text-shadow: 0 0 5px var(--neon-color), 0 0 10px var(--neon-color);
+            box-shadow: 0 0 10px var(--neon-color), inset 0 0 10px var(--neon-color);
+            transition: all 0.3s ease-in-out;
+            text-transform: uppercase;
+        }
+
+        .neon-button:hover {
+            background-color: var(--neon-color);
+            color: var(--bg-color);
+            text-shadow: none;
+            box-shadow: 0 0 20px var(--neon-color), inset 0 0 20px var(--neon-color);
+        }
+
+        /* --- Estilos do Conteúdo --- */
+        h1, h2 {
+            color: var(--neon-color); 
+            text-shadow: 0 0 3px rgba(160, 32, 240, 0.5);
+            text-align: center; 
+            margin-bottom: 5px; 
+            margin-top: 0; 
+        }
+        
+        #mensagem-topo {
+            text-align: center;
+            margin-bottom: 25px;
+            font-style: italic;
+        }
+
+        /* ESTILO DO TEXTO FINAL (MAIOR E CORRIGIDO) */
+        p {
+            line-height: 2.0; 
+            margin-bottom: 50px;
+            text-align: justify; 
+            font-size: 2.0rem; /* TAMANHO CORRIGIDO E AUMENTADO */
+        }
+
+        /* Estilo SPOTIFY (PEQUENO, CENTRALIZADO E MAIS DISTANTE) */
+        .spotify-embed {
+            margin: 0 auto 60px auto; 
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: none; 
+            max-width: 400px; 
+            width: 100%; 
+        }
+        
+        /* Estilos do CARROSSEL */
+        .carousel-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            height: 400px; 
+            margin: 30px auto;
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(105, 10, 163, 0.7); 
+        }
+
+        .carousel-slide { 
+            display: none; 
+            width: 100%; 
+            height: 100%; 
+        }
+
+        .carousel-slide img { 
+            width: 100%; 
+            height: 100%; 
+            display: block; 
+            object-fit: cover; 
+            object-position: center; 
+        }
+
+        .prev, .next {
+            cursor: pointer; position: absolute; top: 50%; width: auto; padding: 16px;
+            margin-top: -22px; color: white; font-weight: bold; font-size: 18px;
+            transition: 0.6s ease; user-select: none; background-color: rgba(0,0,0,0.5); z-index: 10;
+        }
+
+        .next { right: 0; border-radius: 3px 0 0 3px; }
+        .prev:hover, .next:hover { background-color: rgba(0,0,0,0.8); }
+
+        /* === ANIMAÇÃO DE CORAÇÕES === (RESTAURADO) */
+        #heart-field {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none; 
+            z-index: 1; 
+        }
+
+        .heart {
+            position: absolute;
+            font-size: 1.5rem;
+            opacity: 0;
+            animation: heart-lift 5s linear infinite;
+        }
+
+        @keyframes heart-lift {
+            0% { 
+                transform: translateY(0) rotate(0deg); 
+                opacity: 0.8; 
+            }
+            100% { 
+                transform: translateY(-100vh) rotate(180deg); 
+                opacity: 0; 
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="entry-screen">
+        <button class="neon-button" onclick="showContent()">
+            Clique Aqui, Minha Mulher
+        </button>
+    </div>
+
+    <div id="heart-field"></div>
+
+
+    <div id="content-container">
+        
+        
+        <div class="spotify-embed">
+            <iframe data-testid="embed-iframe" 
+                style="border-radius:12px" 
+                src="https://open.spotify.com/embed/track/2afCBiru10AFckfOa49wIa?utm_source=generator&autoplay=true" 
+                width="100%" 
+                height="80" 
+                frameBorder="0" 
+                allowfullscreen="" 
+                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+                loading="lazy">
+            </iframe>
+        </div>
+        
+        
+       
+    
+        <div class="carousel-container">
+            <div class="carousel-slide fade">
+                <img src="foto14.jpg" alt="Nossa primeira foto no espelho">
+            </div>
+
+            <div class="carousel-slide fade">
+                <img src="foto13.jpg" alt="Nosso primeiro role 'Formal'">
+            </div>
+
+            <div class="carousel-slide fade">
+                <img src="Foto12.jpg" alt="Skin careeee">
+            </div>
+            <div class="carousel-slide fade">
+                <img src="foto11.jpg" alt="Aquela que me traz mais felicidade, junto com aquele que me traz mais raiva">
+            </div>
+            <div class="carousel-slide fade">
+                <img src="Foto10.jpg" alt="Primeira foto juntos">
+            </div>
+            <div class="carousel-slide fade">
+                <img src="Foto9.jpg" alt="Jesus de aritmeia">
+            </div>
+            <div class="carousel-slide fade">
+                <img src="foto8.jpg" alt="Um rockeiro e uma emo fazendo o que ambos procuravam">
+            </div>
+            <div class="carousel-slide fade">
+                <img src="Foto7.jpg" alt="Baladeiros">
+            </div>
+            <div class="carousel-slide fade">
+                <img src="Foto6.jpg" alt="Os mafiosos">
+            </div>
+            <div class="carousel-slide fade">
+                <img src="Foto5.jpg" alt="Alianças">
+            </div>
+            <div class="carousel-slide fade">
+                <img src="Foto4.jpg" alt="A mimir">
+            </div>
+            <div class="carousel-slide fade">
+                <img src="Foto3.jpg" alt="Indo ver o espetáculo da minha namorada dançar">
+            </div>
+             <div class="carousel-slide fade">
+                <img src="Foto2.jpg" alt="Os leitores">
+            </div>
+             <div class="carousel-slide fade">
+                <img src="Foto1.jpg" alt="little us">
+            </div>
+            
+            <a class="prev" onclick="plusSlides(-1); resetTimer()">❮</a>
+            <a class="next" onclick="plusSlides(1); resetTimer()">❯</a>
+        </div>
+
+        
+        <p>
+            Para aquela que conquistou meu coração, que me mostrou a felicidade, que eu posso ser eu mesmo e buscar os meus sonhos, que alegrou meus seis meses e que alegrará o resto da minha vida por ti ter ao meu lado, feliz seis meses minha vida
+        </p>
+    </div>
+
+    <script>
+        // --- FUNÇÕES DO CARROSSEL ---
+        let slideIndex = 0; 
+        let slideTimer;
+        const SLIDE_INTERVAL = 2500; 
+
+        function plusSlides(n) {
+            slideIndex += n;
+            showSlide(slideIndex);
+        }
+
+        function showSlide(n) {
+            let slides = document.getElementsByClassName("carousel-slide");
+            if (slides.length === 0) return; 
+            if (n >= slides.length) {slideIndex = 0}    
+            if (n < 0) {slideIndex = slides.length - 1}
+            for (let i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";  
+            }
+            if (slides.length > 0) {
+                slides[slideIndex].style.display = "block";  
+            }
+        }
+        
+        function autoShowSlides() {
+            slideIndex++;
+            showSlide(slideIndex);
+            slideTimer = setTimeout(autoShowSlides, SLIDE_INTERVAL);
+        }
+
+        function resetTimer() {
+            clearTimeout(slideTimer); 
+            slideTimer = setTimeout(autoShowSlides, SLIDE_INTERVAL); 
+        }
+        // --- FIM DAS FUNÇÕES DO CARROSSEL ---
+
+
+        // === FUNÇÕES DOS CORAÇÕES ===
+
+        const heartField = document.getElementById('heart-field');
+        const heartColors = ['var(--heart-color-red)', 'var(--heart-color-black)'];
+        const heartText = '♥'; 
+
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = heartText;
+
+            heart.style.color = heartColors[Math.floor(Math.random() * heartColors.length)];
+
+            const startX = Math.random() * window.innerWidth;
+            heart.style.left = `${startX}px`;
+            heart.style.bottom = `-50px`; 
+
+            heart.style.animationDuration = `${4 + Math.random() * 2}s`;
+
+            heartField.appendChild(heart);
+
+            setTimeout(() => {
+                heart.remove();
+            }, 6000); 
+        }
+
+        // FUNÇÃO PRINCIPAL DE REVELAÇÃO DE CONTEÚDO
+        function showContent() {
+            // 1. Esconde a tela de entrada
+            document.getElementById('entry-screen').style.display = 'none';
+            
+            // 2. Mostra o container de conteúdo
+            const content = document.getElementById('content-container');
+            content.style.display = 'block';
+            
+            setTimeout(() => {
+                content.style.opacity = '1';
+                autoShowSlides();
+            }, 50);
+
+            // 3. Inicia a chuva de corações
+            setInterval(createHeart, 300); // Cria um novo coração a cada 300 milissegundos
+        }
+    </script>
+
+</body>
+</html>
