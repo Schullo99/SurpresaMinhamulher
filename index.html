@@ -35,7 +35,7 @@
             width: 100%;
             margin: 20px auto;
             background-color: transparent; 
-            padding: 10px 30px 30px 30px; /* Padding ajustado para o topo */
+            padding: 10px 30px 30px 30px; 
             display: none; 
             opacity: 0; 
             transition: opacity 1s ease-in-out;
@@ -95,15 +95,15 @@
             font-style: italic;
         }
 
-        /* ESTILO DO TEXTO FINAL (MAIOR E CORRIGIDO) */
+        /* ESTILO DO TEXTO FINAL (AGORA 1.4rem) */
         p {
             line-height: 2.0; 
             margin-bottom: 50px;
             text-align: justify; 
-            font-size: 2.0rem; /* TAMANHO CORRIGIDO E AUMENTADO */
+            font-size: 1.4rem; 
         }
 
-        /* Estilo SPOTIFY (PEQUENO, CENTRALIZADO E MAIS DISTANTE) */
+        /* Estilo SPOTIFY */
         .spotify-embed {
             margin: 0 auto 60px auto; 
             border-radius: 8px;
@@ -148,7 +148,7 @@
         .next { right: 0; border-radius: 3px 0 0 3px; }
         .prev:hover, .next:hover { background-color: rgba(0,0,0,0.8); }
 
-        /* === ANIMAÇÃO DE CORAÇÕES === (RESTAURADO) */
+        /* === ANIMAÇÃO DE CORAÇÕES/MORCEGOS === */
         #heart-field {
             position: fixed;
             top: 0;
@@ -164,6 +164,7 @@
             font-size: 1.5rem;
             opacity: 0;
             animation: heart-lift 5s linear infinite;
+            /* O MORCEGO VAI HERDAR ESTE ESTILO, MAS O TEXTO É ESCOLHIDO ALEATORIAMENTE */
         }
 
         @keyframes heart-lift {
@@ -191,7 +192,7 @@
 
     <div id="content-container">
         
-        
+        <h2>A Nossa Música</h2>
         <div class="spotify-embed">
             <iframe data-testid="embed-iframe" 
                 style="border-radius:12px" 
@@ -205,9 +206,13 @@
             </iframe>
         </div>
         
-        
-       
-    
+        <h1>VOCÊ É MINHA VIDA</h1>
+        <p id="mensagem-topo">
+            Querida, esta surpresa foi feita com todo o meu coração.
+        </p>
+
+
+        <h2>Nossas Melhores Memórias</h2>
         <div class="carousel-container">
             <div class="carousel-slide fade">
                 <img src="foto14.jpg" alt="Nossa primeira foto no espelho">
@@ -258,37 +263,14 @@
             <a class="next" onclick="plusSlides(1); resetTimer()">❯</a>
         </div>
 
-        
+        <h2>Uma Declaração de Amor</h2>
         <p>
-          O que seria seis meses?
-São cento e oitenta e três dias, são quatro mil trezentas e noventa e duas horas,
-duzentos e sessente e três mil e quinhentos e vinte minutos, são quinze milhões
-oitocentos e onze mil e duzentos segundos, são quinze bilhões oitocentos e onze
-milhões e duzentos mil milésimos, mas quem está contando kkk, faz só esse tempo
-que estamos juntos, que fomos na minon, depois na missa, comemos uma pizza e
-subimos para o ático, com você sobre mim, te pedi em namoro, da forma mais
-aleatória possível e você aceitou, depois deste dia, minha vida mudou, eu não
-estava só, eu tinha alguém ao lado, não uma qualquer, a mulher da minha vida, a
-minha mulher, aquela que eu daria minha vida, aquela que me fez ver o mundo de
-outra forma, que meus sonhos não estavam longe como as estrelas, que se eu me
-dedicasse, poderia ter as estrelas nas minhas mãos, que foi comigo fazer a prova,
-que me fez revisões, que me ensinou a jogar trunfo das princesas, despertou meu
-lado acadêmico, uma chama que havia se apagado, entre todas essas coisas, teve
-uma que você fez, que sou eternamente grato, me fez ser o homem mais feliz do
-mundo, por poder dizer que te tenho ao meu lado, uma mulher de Deus, que me
-puxa para a igreja, que canta como um anjo, que te a beleza de Afrodite, a
-genialidade de Platão, o gosto musical que mais diferenciado, de Taylor Swift até
-Djavan, a determinação do Apostolo Pedro, uma verdadeira guerreira, vai até fim
-pelo que deseja, reconhece os erros e sempre tenta melhorar, você é tudo isso, a
-pessoa que mais me orgulho, a que eu mais amo, espero, do fundo do meu
-coração, que você sempre seja feliz, que o mundo seja incrível para você, assim
-como você é, feliz seis meses minha vida, meu amor, minha vidoca, minha mulher.
-Te amo.
+            Para aquela que conquistou meu coração, que me mostrou a felicidade, que eu posso ser eu mesmo e buscar os meus sonhos, que alegrou meus seis meses e que alegrará o resto da minha vida por ti ter ao meu lado, feliz seis meses minha vida
         </p>
     </div>
 
     <script>
-        // --- FUNÇÕES DO CARROSSEL ---
+        // --- FUNÇÕES DO CARROSSEL (SEM ALTERAÇÃO) ---
         let slideIndex = 0; 
         let slideTimer;
         const SLIDE_INTERVAL = 2500; 
@@ -324,19 +306,34 @@ Te amo.
         // --- FIM DAS FUNÇÕES DO CARROSSEL ---
 
 
-        // === FUNÇÕES DOS CORAÇÕES ===
+        // === FUNÇÕES DOS CORAÇÕES E MORCEGOS (ALTERADO) ===
 
         const heartField = document.getElementById('heart-field');
         const heartColors = ['var(--heart-color-red)', 'var(--heart-color-black)'];
-        const heartText = '♥'; 
+        
+        // NOVO: Array com corações e o morcego
+        const particleOptions = [
+            { symbol: '♥', color: 'var(--heart-color-red)' },
+            { symbol: '♥', color: 'var(--heart-color-black)' },
+            { symbol: '🦇', color: 'var(--heart-color-black)' } // Morcego Preto
+        ];
 
         function createHeart() {
             const heart = document.createElement('div');
             heart.classList.add('heart');
-            heart.innerHTML = heartText;
 
-            heart.style.color = heartColors[Math.floor(Math.random() * heartColors.length)];
+            // Seleciona um dos três símbolos/cores aleatoriamente
+            const selectedParticle = particleOptions[Math.floor(Math.random() * particleOptions.length)];
 
+            heart.innerHTML = selectedParticle.symbol;
+            heart.style.color = selectedParticle.color;
+            
+            // Corrige o tamanho do morcego, que é um emoji
+            if (selectedParticle.symbol === '🦇') {
+                 heart.style.fontSize = '1.8rem'; 
+                 heart.style.transform = 'rotate(10deg)'; // Gira levemente o morcego
+            }
+            
             const startX = Math.random() * window.innerWidth;
             heart.style.left = `${startX}px`;
             heart.style.bottom = `-50px`; 
@@ -364,8 +361,8 @@ Te amo.
                 autoShowSlides();
             }, 50);
 
-            // 3. Inicia a chuva de corações
-            setInterval(createHeart, 300); // Cria um novo coração a cada 300 milissegundos
+            // 3. Inicia a chuva de corações/morcegos
+            setInterval(createHeart, 300); // Cria um novo item a cada 300 milissegundos
         }
     </script>
 
